@@ -1,22 +1,17 @@
 import _ from "lodash";
 import "./style.css";
 
-import  printMe  from './print.js';
+import { mergeSort, removeDuplicates } from "./mergeSort";
+import { Node, Tree, buildTree } from "./bst";
+import { list } from "./data";
 
-function component() {
-  const element = document.createElement("div");
-  const btn = document.createElement('button');
+// Merge the array into numerical order
+let array = mergeSort(list);
 
-  // Lodash, now imported by this script
-  element.innerHTML = _.join(["Hello", "webpack"], " ");
-  element.classList.add("hello");
+// Remove duplicates
+removeDuplicates(array);
 
-  btn.innerHTML = 'Click me and check the console!';
-  btn.onclick = printMe;
+// Build the tree with the list
+let tree = (buildTree(array));
+console.log(tree);
 
-  element.appendChild(btn);
-
-  return element;
-}
-
-document.body.appendChild(component());
