@@ -2,6 +2,9 @@
 
 // Structure of the Node of Binary tree
 // with count of Children nodes in
+
+import { last } from "lodash";
+
 // left sub-tree and right sub-tree.
 export class Node {
   constructor(val) {
@@ -19,72 +22,50 @@ export class Tree {
   }
 }
 
-// Function to check whether the given
-// Binary tree is a perfect binary tree
-// using the no. of nodes in tree.
-export function isPBT(count){
- 
-  count = count + 1
-
-  // Loop to check the count is in
-  // the form of 2^(n-1)
-  while (count % 2 == 0)
-      count = count / 2
-
-  if (count == 1)
-      return true
-  else
-      return false
+export function insertRoot(data) {
+  let node = new Node(data)
+    let root = new Tree(node);
+    return root;
 }
+
+export function createTree(array) {
+  let root;
+  let half = Math.ceil(array.length/2); 
+  let left = array.splice(0, half);
+  let right = array;
+  if (left.length > right.length) {
+    root = insertRoot(left[left.length - 1]);
+    array = updateArray(left, right);
+    return [root, array];
+   } 
+}
+
+export function updateArray(left, right) {
+  left.splice((left.length - 1), 1);
+  let array = left.concat(right);
+  return array;
+}
+
+export function updateLeftSide(root, array) {
+  let half = Math.ceil(array.length/2); 
+  array = array.splice(0, half);
+  half = Math.ceil(array.length / 2);
+  let left = array.splice(0, half)
+  let right = array;
   
-
-  export function insert(root, data){
-    // Condition when root is null
-    if (!root) {
-      let n = new Node(data);
-      return n;
-    }
-     // Condition when count of left sub-tree
-  // Nodes is equal to the
-  // right subtree nodes
-  if (root.rcount == root.lcount){
-    root.left = insert(root.left, data)
-    root.lcount += 1;
-  }
-
-  // Condition when count of left sub-tree
-  // nodes is greater than
-  // the right sub-tree nodes
-  else if (root.rcount < root.lcount) {
-    // Condition when left Sub-tree is
-    // Perfect Binary Tree then Insert
-    // in right sub-tree.
-    if (isPBT(root.lcount)) {
-      root.right = insert(root.right, data);
-      root.rcount += 1;
-    }
-
-    // If Left Sub-tree is not Perfect
-    // Binary Tree then Insert in left sub-tree
-    else {
-      root.left = insert(root.left, data)
-      root.lcount += 1;
-    } 
-  }
-  return root;
-}
-
-// Function for inorder traversal of tree
-export function inorder(root){
- 
-  if(root){
-      inorder(root.left)
-      document.write(root.data," ")
-      inorder(root.right)
-  }
+  if (left.length >= right.length) {
+    if (left.length==0)
+      return;
+    root.left = new Node(left[left.length - 1]);
+    left.splice(left.length - 1, 1);
+    array = updateArray(left, right);
+    updateLeftSide(root.left, array);
+  } else if (left.length < right.length) {
+    root.root.left = new Node(right[0]);
+    right.splice(0, 1);
+    array = updateArray(left, right);
+    updateLeftSide(root.left, array)
+  } 
 }
 
  
-
-
-
