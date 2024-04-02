@@ -2,10 +2,11 @@ import _ from "lodash";
 import "./style.css";
 
 import { mergeSort, removeDuplicates } from "./mergeSort";
-import { insertNode, deleteNode, findNode, depthNode, levelOrder, breadthFirstSearch, height, isBalanced } from "./bst";
+import { insertNode, deleteNode, findNode, depthNode, levelOrder, breadthFirstSearch, height, isBalanced, rebalance } from "./bst";
 import { list } from "./data";
 import { prettyPrint } from "./prettyPrint";
 import { Tree } from "./bst";
+import { addDriverButton } from "./driverScript";
 
 import { inOrder, preOrder, postOrder } from "./orders";
 
@@ -17,12 +18,6 @@ let array = mergeSort(list);
 // Remove duplicates
 removeDuplicates(array);
 
-/*
-let root;
-root = createTree(array);
-array = root[1];
-root = root[0];
-*/
 let start = 0;
 let end = array.length - 1;
 
@@ -74,3 +69,15 @@ console.log(depth);
 
 // 10, isBalanced function
 console.log(isBalanced(tree.root));
+
+insertNode(326, tree.root);
+console.log(isBalanced(tree.root));
+
+// 11. Write a rebalance function
+prettyPrint(tree.root);
+tree = rebalance(tree.root);
+prettyPrint(tree.root);
+console.log(isBalanced(tree.root));
+
+// Driver Script Info
+addDriverButton();

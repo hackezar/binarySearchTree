@@ -6,6 +6,7 @@ import { prettyPrint } from "./prettyPrint";
 import { last } from "lodash";
 
 import { inOrder } from "./orders";
+import { removeDuplicates } from "./mergeSort";
 
 // left sub-tree and right sub-tree.
 export class Node {
@@ -214,9 +215,40 @@ export function depthNode(node, root) {
 }
 
 export function isBalanced(root) {
-  console.log(root)
-  let left = depthNode(root.left, root)
+  function getDepth(root) {
+    if (root == null)
+      return 0;
+    else {
+    // Get depth of each subtree
+    let leftDepth = getDepth(root.left);
+    let rightDepth = getDepth(root.right);
+
+    // use the larger one
+    if (leftDepth > rightDepth)
+      return (leftDepth + 1);
+    else
+      return (rightDepth + 1);
+    }
+  }
+
+  let left = getDepth(root.left);
+  let right = getDepth(root.right);
   
+  // Make sure sub trees are balanced
+  if (Math.abs(left - right) > 1)
+    return false;
+  else if (Math.abs(right - left) > 1)
+    return false;
+  else 
+    return true;
+}
+
+export function rebalance(root) {
+  let result = inOrder(root);
+  let start = 0;
+  let end = result.length - 1;
+  let tree = new Tree(result, start, end);
+  return tree;
 }
 
 
